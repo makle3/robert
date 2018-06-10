@@ -17,7 +17,7 @@ async def my_background_task():
     await client.wait_until_ready()
     timeToRelease = datetime.datetime.strptime("August 14 2018", '%B %d %Y')
     while not client.is_closed:
-        timeNow = datetime.datetime.utcnow()
+        timeNow = datetime.datetime.utcnow() + datetime.timedelta(hours=2)
         delta = timeToRelease - timeNow
         hours, remainder = divmod(delta.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
