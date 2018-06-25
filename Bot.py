@@ -26,6 +26,7 @@ async def my_background_task():
             print(timeNow)
             await client.edit_channel(client.get_channel(id=os.environ['channel']), topic=countdown)
             await asyncio.sleep(60) # task runs every 60 seconds
+        await asyncio.sleep(60)  # wait for  60 seconds
 
 
 client.loop.create_task(my_background_task())
