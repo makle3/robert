@@ -22,7 +22,7 @@ async def my_background_task():
             delta = timeToRelease - timeNow
             hours, remainder = divmod(delta.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
-            countdown ="BFA RELEASE IN " + str(delta.days) + " DAYS, " + str(hours) + " HOURS AND " + str('%02d' % minutes) + " MINUTES! (ish) :porg:"
+            countdown ="BFA RELEASE IN " + str(delta.days) + " DAYS, " + str(hours) + " HOURS AND " + str('%02d' % minutes) + " MINUTES! (ish)"
             print(timeNow)
             await client.edit_channel(client.get_channel(id=os.environ['channel']), topic=countdown)
             await asyncio.sleep(60) # task runs every 60 seconds
