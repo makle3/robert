@@ -2,6 +2,7 @@ import os
 import discord
 import asyncio
 import datetime
+import time
 
 client = discord.Client()
 
@@ -30,4 +31,7 @@ async def my_background_task():
 
 
 client.loop.create_task(my_background_task())
-client.run(os.environ['token'])
+
+while True:
+    client.run(os.environ['token'])
+    time.sleep(50)
