@@ -3,6 +3,7 @@ import discord
 import asyncio
 import datetime
 import time
+import sys
 
 client = discord.Client()
 
@@ -15,23 +16,25 @@ async def on_ready():
     print('------')
 
 async def my_background_task():
-    while True:
-        await client.wait_until_ready()
-        timeToRelease = datetime.datetime.strptime("August 14 2018", '%B %d %Y')
-        while not client.is_closed:
-            timeNow = datetime.datetime.utcnow() + datetime.timedelta(hours=2)
-            delta = timeToRelease - timeNow
-            hours, remainder = divmod(delta.seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            countdown ="BFA RELEASE IN " + str(delta.days) + " DAYS, " + str(hours) + " HOURS AND " + str('%02d' % minutes) + " MINUTES! (ish)"
-            print(timeNow)
+    await client.wait_until_ready()
+    timeToRelease = datetime.datetime.strptime("August 14 2018", '%B %d %Y')
+    while not client.is_closed:
+        timeNow = datetime.datetime.utcnow() + datetime.timedelta(hours=2)
+        delta = timeToRelease - timeNow
+        hours, remainder = divmod(delta.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        countdown ="BFA RELEASE IN " + str(delta.days) + " DAYS, " + str(hours) + " HOURS AND " + str('%02d' % minutes) + " MINUTES! (ish)"
+        print(timeNow)
+        try:
             await client.edit_channel(client.get_channel(id=os.environ['channel']), topic=countdown)
-            await asyncio.sleep(60) # task runs every 60 seconds
-        await asyncio.sleep(60)  # wait for  60 seconds
+        except:
+            print("Some error: ", sys.exc_info()[0])
+        await asyncio.sleep(60) # task runs every 60 seconds
+
 
 
 client.loop.create_task(my_background_task())
 
-while True:
-    client.run(os.environ['token'])
-    time.sleep(50)
+
+client.run(os.environ['token'])
+
