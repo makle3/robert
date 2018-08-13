@@ -20,7 +20,7 @@ async def my_background_task():
     timeToRelease = datetime.datetime.strptime("August 14 2018", '%B %d %Y')
     while not client.is_closed:
         timeNow = datetime.datetime.utcnow() + datetime.timedelta(hours=2)
-        if timeNow.time() < timeToRelease.time():
+        if timeNow.time() > timeToRelease.time():
             countdown = "Ingen tid at spilde, nu skal der spilles!"
         else:
             delta = timeToRelease - timeNow
